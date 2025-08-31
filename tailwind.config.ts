@@ -84,6 +84,21 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'manga-shine': {
+					'0%': { transform: 'translateX(-100%)' },
+					'50%': { transform: 'translateX(100%)' },
+					'100%': { transform: 'translateX(100%)' }
+				},
+				'panel-slide': {
+					'0%': { 
+						transform: 'translateX(-100%) scale(0.8)',
+						opacity: '0'
+					},
+					'100%': { 
+						transform: 'translateX(0) scale(1)',
+						opacity: '1'
+					}
 				}
 			},
 			animation: {
@@ -96,7 +111,9 @@ export default {
 				'slide-in-right': 'slide-in-right 0.6s ease-out',
 				'fade-in-up': 'fade-in-up 0.8s ease-out',
 				'phone-ring': 'phone-ring 0.5s ease-in-out infinite',
-				'cheers': 'cheers 2s ease-in-out'
+				'cheers': 'cheers 2s ease-in-out',
+				'manga-shine': 'manga-shine 3s ease-in-out infinite',
+				'panel-slide': 'panel-slide 0.8s ease-out'
 			}
 		}
 	},

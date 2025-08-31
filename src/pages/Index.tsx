@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import IntroScene from '@/components/IntroScene';
-import StoryScene from '@/components/StoryScene';
+import MangaStoryScene from '@/components/MangaStoryScene';
 
 const Index = () => {
   const [currentScene, setCurrentScene] = useState(-1); // -1 for intro, 0-4 for story scenes
@@ -26,7 +26,7 @@ const Index = () => {
       )}
       
       {currentScene >= 0 && currentScene < totalScenes && (
-        <StoryScene 
+        <MangaStoryScene 
           sceneNumber={currentScene}
           onNext={handleNextScene}
           isActive={true}
