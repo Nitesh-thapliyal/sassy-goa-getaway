@@ -8,35 +8,56 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Goa-inspired tropical color palette */
+    --background: 28 100% 97%;
+    --foreground: 24 45% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 24 45% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 24 45% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Sunset orange primary */
+    --primary: 15 85% 55%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Coral secondary */
+    --secondary: 5 75% 75%;
+    --secondary-foreground: 24 45% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Sandy beige muted */
+    --muted: 35 25% 88%;
+    --muted-foreground: 24 25% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Turquoise accent */
+    --accent: 175 70% 55%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 35 25% 85%;
+    --input: 35 25% 85%;
+    --ring: 15 85% 55%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
+
+    /* Tropical gradients */
+    --gradient-sunset: linear-gradient(135deg, hsl(15, 85%, 55%), hsl(25, 90%, 65%), hsl(35, 85%, 70%));
+    --gradient-ocean: linear-gradient(180deg, hsl(175, 70%, 55%), hsl(195, 80%, 65%));
+    --gradient-beach: linear-gradient(45deg, hsl(35, 45%, 85%), hsl(45, 55%, 90%));
+    --gradient-palm: linear-gradient(90deg, hsl(85, 40%, 35%), hsl(95, 50%, 45%));
+
+    /* Animation shadows */
+    --shadow-tropical: 0 20px 40px -10px hsl(15 85% 55% / 0.3);
+    --shadow-ocean: 0 10px 30px -5px hsl(175 70% 55% / 0.4);
+    --shadow-float: 0 5px 15px -3px hsl(0 0% 0% / 0.1);
+
+    /* Story elements */
+    --wine-red: 345 75% 45%;
+    --palm-green: 95 50% 45%;
+    --airplane-blue: 210 80% 60%;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +121,120 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
   }
+}
+
+@layer components {
+  /* Tropical animations */
+  .float-gentle {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .wave-animation {
+    animation: wave 2s ease-in-out infinite;
+  }
+
+  .bounce-cute {
+    animation: bounce-cute 1.5s ease-in-out infinite;
+  }
+
+  .speech-bubble {
+    @apply relative bg-card p-4 rounded-2xl shadow-lg;
+    filter: drop-shadow(var(--shadow-float));
+  }
+
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 30px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid hsl(var(--card));
+  }
+
+  .character-card {
+    @apply relative p-6 rounded-3xl bg-gradient-to-br shadow-lg transform transition-all duration-300;
+    background: var(--gradient-beach);
+    box-shadow: var(--shadow-tropical);
+  }
+
+  .palm-tree {
+    @apply relative;
+    background: var(--gradient-palm);
+  }
+
+  .wine-glass {
+    @apply inline-block transform transition-transform duration-300;
+    filter: drop-shadow(0 2px 8px hsl(var(--wine-red) / 0.3));
+  }
+
+  .wine-glass:hover {
+    @apply scale-110 rotate-12;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-sunset {
+    background: var(--gradient-sunset);
+  }
+
+  .bg-gradient-ocean {
+    background: var(--gradient-ocean);
+  }
+
+  .bg-gradient-beach {
+    background: var(--gradient-beach);
+  }
+
+  .text-shadow-glow {
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+  }
+}
+
+/* Story animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+@keyframes wave {
+  0%, 100% { transform: translateX(0px); }
+  25% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+
+@keyframes bounce-cute {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-8px) scale(1.05); }
+}
+
+@keyframes slide-in-left {
+  from { transform: translateX(-100px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes phone-ring {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  75% { transform: rotate(-5deg); }
+}
+
+@keyframes cheers {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(10deg); }
+  100% { transform: translateY(0) rotate(0deg); }
 }

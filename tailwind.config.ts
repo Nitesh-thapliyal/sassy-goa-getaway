@@ -88,7 +88,15 @@ export default {
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'float': 'float 3s ease-in-out infinite',
+				'wave': 'wave 2s ease-in-out infinite',
+				'bounce-cute': 'bounce-cute 1.5s ease-in-out infinite',
+				'slide-in-left': 'slide-in-left 0.6s ease-out',
+				'slide-in-right': 'slide-in-right 0.6s ease-out',
+				'fade-in-up': 'fade-in-up 0.8s ease-out',
+				'phone-ring': 'phone-ring 0.5s ease-in-out infinite',
+				'cheers': 'cheers 2s ease-in-out'
 			}
 		}
 	},
