@@ -1,4 +1,4 @@
-import partyImage from '/src/assets/party.png';
+import partyImage from '/assets/party.png';
 
 export const backgrounds = {
   airport: "https://images.unsplash.com/photo-1583224964978-2264a142bb1b?auto=format&fit=crop&q=80",

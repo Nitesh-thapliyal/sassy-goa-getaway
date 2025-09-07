@@ -4,21 +4,21 @@ import { Button } from "@/components/ui/button";
 const CharacterSprite = ({ character, expression, action, isActive, position, size = "large" }) => {
   const spriteMap = {
     nitesh: {
-      happy: "/src/assets/nitesh.jpeg",
-      excited: "/src/assets/nitesh.jpeg",
-      surprised: "/src/assets/nitesh.jpeg",
-      neutral: "/src/assets/nitesh.jpeg",
+      happy: "/assets/nitesh.jpeg",
+      excited: "/assets/nitesh.jpeg",
+      surprised: "/assets/nitesh.jpeg",
+      neutral: "/assets/nitesh.jpeg",
     },
     jahanvi: {
-      happy: "/src/assets/jhanvi.jpg",
-      excited: "/src/assets/jhanvi.jpg",
-      surprised: "/src/assets/jhanvi.jpg",
-      neutral: "/src/assets/jhanvi.jpg",
+      happy: "/assets/jhanvi.jpg",
+      excited: "/assets/jhanvi.jpg",
+      surprised: "/assets/jhanvi.jpg",
+      neutral: "/assets/jhanvi.jpg",
     },
     sassy: {
-      happy: "/src/assets/sassy.png",
-      surprised: "/src/assets/sassy-surprised.png",
-      neutral: "/src/assets/sassy.png",
+      happy: "/assets/sassy.png",
+      surprised: "/assets/sassy-surprised.png",
+      neutral: "/assets/sassy.png",
     }
   };
 
