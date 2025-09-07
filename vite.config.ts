@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  // ✅ Add this base configuration for GitHub Pages
+  // ✅ CRITICAL FIX: Add your repository name here
   base: mode === 'production' ? '/sassy-goa-getaway/' : '/',
   
   server: {
