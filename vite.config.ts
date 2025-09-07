@@ -5,8 +5,8 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  // ✅ CRITICAL FIX: Add your repository name here
-  base: mode === 'production' ? '/sassy-goa-getaway/' : '/',
+  // 🚨 CRITICAL: Add this base configuration
+  base: '/sassy-goa-getaway/', // Your repository name
   
   server: {
     host: "::",
