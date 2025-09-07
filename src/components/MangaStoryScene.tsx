@@ -1,258 +1,384 @@
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import niteshCharacter from '@/assets/nitesh-character.jpg';
-import jhanviCharacter from '@/assets/jhanvi-character.jpg';
-import sassyCharacter from '@/assets/sassy-character.jpg';
-import goaBackground from '@/assets/goa-background.jpg';
-import airplaneImage from '@/assets/airplane.jpg';
+import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { dialogueScenes } from "../data/scenes";
+import { celebrationScenes } from "./Celebration";
 
+// Define the Scene interface properly
+interface Character {
+  speaker: string;
+  text: string;
+  expression: string;
+  position: 'left' | 'right' | 'center'; // ✅ Added center position
+  action: string;
+}
+
+interface Scene {
+  background: string;
+  sfx: string;
+  characters: Character[];
+  backgroundEffect?: string;
+  specialContent?: string;
+}
+
+const CharacterSprite = ({ character, expression, action, isActive, position }) => {
+  const spriteMap = {
+    nitesh: {
+      happy: "/src/assets/nitesh.jpeg", 
+      excited: "/src/assets/nitesh.jpeg", 
+      surprised: "/src/assets/nitesh.jpeg",
+      nervous: "/src/assets/nitesh.jpeg", 
+      overjoyed: "/src/assets/nitesh.jpeg", 
+      emotional: "/src/assets/nitesh.jpeg",
+      nostalgic: "/src/assets/nitesh.jpeg",
+      neutral: "/src/assets/nitesh.jpeg",
+    },
+    jahanvi: {
+      happy: "/src/assets/jhanvi.jpg", 
+      enthusiastic: "/src/assets/jhanvi.jpg", 
+      angry: "/src/assets/jhanvi.jpg",
+      relieved: "/src/assets/jhanvi.jpg", 
+      overjoyed: "/src/assets/jhanvi.jpg", 
+      excited: "/src/assets/jhanvi.jpg",
+      neutral: "/src/assets/jhanvi.jpg",
+    },
+    // ✅ Added Sassy sprite map
+    sassy: {
+      surprised: "/src/assets/sassy-character.jpg",
+      happy: "/src/assets/sassy-character.jpg",
+      excited: "/src/assets/sassy-character.jpg",
+      overjoyed: "/src/assets/sassy-character.jpg",
+      neutral: "/src/assets/sassy-character.jpg",
+    },
+  };
+
+  return (
+    <div className={`character-container ${position} ${isActive ? "active" : "inactive"}`}>
+      <img
+        src={spriteMap[character]?.[expression] || spriteMap[character]?.neutral}
+        alt={`${character} ${expression}`}
+        className={`character-sprite ${action} ${character === 'sassy' ? 'sassy-sprite' : ''}`}
+      />
+    </div>
+  );
+};
+
+// Updated interface with proper Scene type instead of any
 interface MangaStorySceneProps {
   sceneNumber: number;
   onNext: () => void;
   isActive: boolean;
+  sceneData?: Scene;
+  isCelebration?: boolean;
 }
 
-const MangaStoryScene = ({ sceneNumber, onNext, isActive }: MangaStorySceneProps) => {
-  const [showContent, setShowContent] = useState(false);
+const MangaStoryScene = ({ sceneNumber, onNext, isActive, sceneData, isCelebration }: MangaStorySceneProps) => {
+  const [currentDialogue, setCurrentDialogue] = useState(0);
+  const [typedText, setTypedText] = useState("");
+  const [showButton, setShowButton] = useState(false);
+  const [isSceneReady, setIsSceneReady] = useState(false);
 
   useEffect(() => {
     if (isActive) {
-      const timer = setTimeout(() => setShowContent(true), 300);
-      return () => clearTimeout(timer);
-    } else {
-      setShowContent(false);
+      setCurrentDialogue(0);
+      setTypedText("");
+      setShowButton(false);
+      setIsSceneReady(false);
+      
+      const sceneTimer = setTimeout(() => setIsSceneReady(true), 100);
+      return () => clearTimeout(sceneTimer);
     }
-  }, [isActive]);
+  }, [sceneNumber, isActive]);
 
-  const scenes = [
-    // Scene 1: Phone Call
-    {
-      title: "📞 The Call That Started It All",
-      content: (
-        <div className="space-y-6">
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className={`manga-panel ${showContent ? 'animate-slide-in-left' : 'opacity-0'}`}>
-              <div className="comic-action-lines"></div>
-              <div className="text-center relative z-10">
-                <img 
-                  src={niteshCharacter} 
-                  alt="Nitesh"
-                  className="manga-character w-32 h-32 mx-auto mb-4 rounded-full object-cover"
-                />
-                <div className="text-4xl mb-4 animate-phone-ring">📱</div>
-                <h3 className="text-xl font-bold mb-2">Nitesh</h3>
-                <p className="text-sm text-muted-foreground mb-4">📍 Noida</p>
-                <div className="speech-bubble">
-                  <p className="text-sm font-bold">"Hey Jhanvi! Guess what day it is? It's Sassy's birthday! We HAVE to celebrate this properly! 🎉"</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className={`manga-panel ${showContent ? 'animate-slide-in-right' : 'opacity-0'}`} style={{ animationDelay: '0.3s' }}>
-              <div className="comic-action-lines"></div>
-              <div className="text-center relative z-10">
-                <img 
-                  src={jhanviCharacter} 
-                  alt="Jhanvi"
-                  className="manga-character w-32 h-32 mx-auto mb-4 rounded-full object-cover"
-                />
-                <div className="text-4xl mb-4 animate-bounce-cute">🎈</div>
-                <h3 className="text-xl font-bold mb-2">Jhanvi</h3>
-                <p className="text-sm text-muted-foreground mb-4">📍 Hyderabad</p>
-                <div className="speech-bubble">
-                  <p className="text-sm font-bold">"OMG YES! Sassy is in Goa right? Let's surprise her there! Pack your bags, we're going to the beach! 🏖️"</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    },
+  useEffect(() => {
+    if (!isSceneReady || !isActive) return;
     
-    // Scene 2: Travel Preparation
-    {
-      title: "🧳 The Great Journey Begins",
-      content: (
-        <div className="space-y-6">
-          <div className={`manga-panel text-center ${showContent ? 'animate-fade-in-up' : 'opacity-0'}`}>
-            <div className="flex justify-center items-center space-x-8 mb-8">
-              <div className="text-center">
-                <div className="text-5xl mb-2 animate-wave">🚖</div>
-                <p className="text-sm font-bold">Nitesh calls taxi</p>
-              </div>
-              <img 
-                src={airplaneImage} 
-                alt="Airplane"
-                className="manga-character w-20 h-20 animate-float"
-              />
-              <div className="text-center">
-                <div className="text-5xl mb-2 animate-wave">🚖</div>
-                <p className="text-sm font-bold">Jhanvi calls taxi</p>
-              </div>
-            </div>
-            
-            <div className="max-w-lg mx-auto">
-              <div className="text-6xl mb-4">🛫</div>
-              <h3 className="text-xl font-bold mb-4">Meeting at the Airport</h3>
-              <div className="speech-bubble">
-                <p className="font-bold">"Look! There's Jhanvi! Ready for some Goa vibes and Sassy's epic birthday celebration? 🌴"</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    },
+    // Use sceneData if provided (celebration), otherwise use dialogueScenes
+    const currentScene = sceneData || dialogueScenes[sceneNumber];
+    if (!currentScene?.characters[currentDialogue]?.text) return;
+
+    setTypedText("");
+    setShowButton(false);
     
-    // Scene 3: Arrival in Goa
-    {
-      title: "🌴 Welcome to Goa Paradise",
-      content: (
-        <div className="space-y-6">
-          <div className={`manga-panel ${showContent ? 'animate-fade-in-up' : 'opacity-0'}`}>
-            <div 
-              className="rounded-2xl p-8 mb-8 text-center relative overflow-hidden"
-              style={{
-                backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${goaBackground})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}
-            >
-              <div className="text-white relative z-10">
-                <div className="text-6xl mb-4 animate-float">🏖️</div>
-                <h3 className="text-2xl font-bold mb-4">Landed in Goa! 🌊</h3>
-                <div className="speech-bubble bg-white text-foreground">
-                  <p className="text-lg font-bold">"The beach breeze, the palm trees... Sassy chose the perfect place to live! Let's find our birthday girl!"</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-4">
-              <div className="text-center animate-bounce-cute">
-                <div className="text-4xl mb-2">🌴</div>
-                <p className="text-sm font-bold">Palm Trees</p>
-              </div>
-              <div className="text-center animate-bounce-cute" style={{ animationDelay: '0.3s' }}>
-                <div className="text-4xl mb-2">🌊</div>
-                <p className="text-sm font-bold">Ocean Waves</p>
-              </div>
-              <div className="text-center animate-bounce-cute" style={{ animationDelay: '0.6s' }}>
-                <div className="text-4xl mb-2">☀️</div>
-                <p className="text-sm font-bold">Sunshine</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    },
-    
-    // Scene 4: Finding Sassy
-    {
-      title: "🎂 The Birthday Surprise",
-      content: (
-        <div className="space-y-6">
-          <div className={`manga-panel text-center ${showContent ? 'animate-fade-in-up' : 'opacity-0'}`}>
-            <img 
-              src={sassyCharacter} 
-              alt="Sassy"
-              className="manga-character w-40 h-40 mx-auto mb-6 rounded-full object-cover"
-            />
-            <div className="text-6xl mb-4 animate-bounce-cute">🎉</div>
-            <h3 className="text-2xl font-bold mb-4">SURPRISE SASSY! 🎂</h3>
-            <div className="speech-bubble max-w-md mx-auto">
-              <p className="text-lg font-bold">"Happy Birthday to our amazing friend! We flew all the way from Noida and Hyderabad just to celebrate with you in paradise! 🥳"</p>
-            </div>
-          </div>
-          
-          <div className="manga-panel text-center">
-            <div className="text-5xl mb-4">🍷✨</div>
-            <h4 className="text-xl font-bold mb-4">Time for a Toast!</h4>
-            <div className="flex justify-center items-center space-x-4 mb-4">
-              <span className="wine-glass text-3xl cursor-pointer">🍷</span>
-              <span className="wine-glass text-3xl cursor-pointer">🍷</span>
-              <span className="wine-glass text-3xl cursor-pointer">🍷</span>
-            </div>
-            <div className="speech-bubble">
-              <p className="text-lg font-bold">"To Sassy - may your year be filled with as much joy as a Goa sunset! Cheers! 🥂"</p>
-            </div>
-          </div>
-        </div>
-      )
-    },
-    
-    // Scene 5: The Letter
-    {
-      title: "💌 A Special Letter for Sassy",
-      content: (
-        <div className="space-y-6">
-          <div className={`manga-panel text-center ${showContent ? 'animate-fade-in-up' : 'opacity-0'}`}>
-            <div className="text-6xl mb-6 animate-float">💝</div>
-            <h3 className="text-2xl font-bold mb-6">Our Letter to You, Sassy</h3>
-            
-            <div className="bg-gradient-to-br from-background to-muted p-8 rounded-2xl max-w-2xl mx-auto border-4 border-foreground">
-              <div className="space-y-4 text-left">
-                <p className="text-lg leading-relaxed font-bold">
-                  <strong>Dear Sassy,</strong> 🌟
-                </p>
-                <p className="font-medium">
-                  From the bustling streets of Noida and the tech hubs of Hyderabad, we've traveled to the beautiful beaches of Goa just to tell you something important...
-                </p>
-                <p className="text-xl font-bold text-center">
-                  YOU ARE ABSOLUTELY AMAZING! 🎉
-                </p>
-                <p className="font-medium">
-                  Your friendship lights up our lives like the Goa sunshine. You bring warmth like the beach sand and joy like the ocean waves. 🌊✨
-                </p>
-                <p className="font-medium">
-                  May this new year of your life be filled with:
-                </p>
-                <ul className="list-disc list-inside space-y-1 ml-4 font-medium">
-                  <li>Adventures as exciting as our spontaneous Goa trip 🏖️</li>
-                  <li>Laughter that echoes like waves on the shore 😄</li>
-                  <li>Love as endless as the Arabian Sea 💕</li>
-                  <li>Dreams as colorful as Goan sunsets 🌅</li>
-                </ul>
-                <p className="text-center text-lg font-bold text-primary mt-6">
-                  Happy Birthday, Sassy! 🎂🎈
-                </p>
-                <p className="text-center font-bold">
-                  With all our love,<br />
-                  <strong>Nitesh & Jhanvi</strong> 💕
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
+    const text = currentScene.characters[currentDialogue].text;
+    let i = 0;
+
+    const startDelay = setTimeout(() => {
+      const typing = setInterval(() => {
+        if (i < text.length) {
+          setTypedText(text.slice(0, i + 1));
+          i++;
+        } else {
+          clearInterval(typing);
+          setTimeout(() => setShowButton(true), 400);
+        }
+      }, 40);
+      return () => clearInterval(typing);
+    }, 200);
+
+    return () => clearTimeout(startDelay);
+  }, [currentDialogue, sceneNumber, isSceneReady, isActive, sceneData]);
+
+  if (!isActive || !isSceneReady) return null;
+  
+  // Use sceneData if provided (celebration), otherwise use dialogueScenes
+  const currentScene = sceneData || dialogueScenes[sceneNumber];
+  if (!currentScene) return null;
+
+  // Function to get SFX text based on scene
+  const getSFXText = (): string => {
+    if (sceneData) {
+      return sceneData.sfx;
     }
-  ];
+    
+    // Original hardcoded SFX for main story scenes with proper typing
+    const sfxMap: Record<number, string> = {
+      0: 'WHOOSH!',
+      1: 'ZOOM!',
+      2: 'TADA!',
+      3: 'CRACK!',
+      4: 'PHEW!',
+      5: 'SURPRISE!'
+    };
+    return sfxMap[sceneNumber] || 'WHOOSH!';
+  };
 
-  if (!isActive) return null;
+  // Function to get speaker display name
+  const getSpeakerName = (speaker: string): string => {
+    const nameMap: Record<string, string> = {
+      nitesh: "Nitesh",
+      jahanvi: "Jahanvi",
+      sassy: "Sassy" // ✅ Added Sassy display name
+    };
+    return nameMap[speaker] || speaker;
+  };
+
+  // Function to get speech bubble position based on character position
+  const getSpeechBubbleStyle = (character: Character) => {
+    switch (character.position) {
+      case 'left':
+        return { left: "25%" };
+      case 'right':
+        return { right: "25%" };
+      case 'center':
+        return { left: "50%", transform: "translateX(-50%)" }; // ✅ Center positioning
+      default:
+        return { left: "25%" };
+    }
+  };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-background via-muted to-secondary/20">
-      <div className="max-w-4xl mx-auto">
-        <h2 className={`text-3xl md:text-4xl font-bold text-center mb-8 text-foreground ${showContent ? 'animate-fade-in-up' : 'opacity-0'}`} style={{
-          textShadow: '3px 3px 0px hsl(var(--muted-foreground))',
-          WebkitTextStroke: '1px hsl(var(--foreground))'
-        }}>
-          {scenes[sceneNumber].title}
-        </h2>
-        
-        <div className="mb-8">
-          {scenes[sceneNumber].content}
-        </div>
-        
-        <div className={`text-center ${showContent ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '1s' }}>
-          <Button 
-            onClick={onNext}
-            size="lg"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-lg px-8 py-3 rounded-full border-4 border-foreground transform transition-all duration-300 hover:scale-105"
-            style={{ boxShadow: '4px 4px 0px hsl(var(--foreground))' }}
-          >
-            {sceneNumber < scenes.length - 1 ? 'Continue Story 👉' : 'Celebrate More! 🎉'}
-          </Button>
-        </div>
+    <div className="manga-scene min-h-screen relative overflow-hidden">
+      <div
+        className={`absolute inset-0 transition-all duration-1000 transform ${
+          currentScene.backgroundEffect === "thunder" ? "thunder-effect" : ""
+        }`}
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.3)), url(${currentScene.background})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      />
+
+      {currentScene.backgroundEffect === "thunder" && <div className="thunder-overlay"></div>}
+
+      {/* Updated SFX that works for both main and celebration scenes */}
+      <div 
+        className="absolute top-10 left-1/2 transform -translate-x-1/2 z-30"
+        style={{
+          fontFamily: 'Impact, Arial Black, Helvetica, sans-serif',
+          fontSize: '4.5rem',
+          fontWeight: 900,
+          color: isCelebration ? '#ff69b4' : '#ff1744',
+          transform: 'rotate(-8deg)',
+          textShadow: '4px 4px 0 #ffffff, -3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000',
+          letterSpacing: '4px',
+          textTransform: 'uppercase',
+          whiteSpace: 'nowrap',
+          userSelect: 'none'
+        }}
+      >
+        {getSFXText()}
       </div>
+
+      {/* Render all characters in the scene */}
+      {currentScene.characters.map((char, index) => (
+        <CharacterSprite
+          key={`${char.speaker}-${index}`}
+          character={char.speaker}
+          expression={char.expression}
+          action={currentDialogue === index ? char.action : ""}
+          isActive={currentDialogue === index}
+          position={char.position}
+        />
+      ))}
+
+      {/* Speech bubble with dynamic positioning */}
+      {currentScene.characters[currentDialogue] && (
+        <div
+          className="speech-container"
+          style={{
+            position: "absolute",
+            zIndex: 30,
+            ...getSpeechBubbleStyle(currentScene.characters[currentDialogue]),
+            bottom: "55%",
+          }}
+        >
+          <div className={`speech-bubble-manga animate-in ${isCelebration ? 'celebration-bubble' : ''}`}>
+            <div className="speaker-name">
+              {getSpeakerName(currentScene.characters[currentDialogue].speaker)}
+            </div>
+            <div className="dialogue-text">{typedText}</div>
+          </div>
+        </div>
+      )}
+
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-4 z-20">
+        <Button
+          onClick={() => currentDialogue > 0 && setCurrentDialogue(prev => prev - 1)}
+          disabled={currentDialogue === 0}
+          className="bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded"
+        >
+          Previous
+        </Button>
+        {showButton && (
+          <Button
+            onClick={() => {
+              if (currentDialogue < currentScene.characters.length - 1) {
+                setCurrentDialogue(prev => prev + 1);
+              } else {
+                onNext();
+              }
+            }}
+            className={`${isCelebration ? 'bg-pink-600 hover:bg-pink-500' : 'bg-blue-600 hover:bg-blue-500'} text-white px-6 py-2 rounded font-bold`}
+          >
+            {currentDialogue < currentScene.characters.length - 1 ? "Next" : "Continue →"}
+          </Button>
+        )}
+      </div>
+
+      <style>{`
+        .character-container {
+          position: absolute;
+          transition: all 0.5s ease-out;
+        }
+        .character-container.left { left: 10%; bottom: 20%; }
+        .character-container.right { right: 10%; bottom: 20%; }
+        .character-container.center { 
+          left: 50%; 
+          bottom: 20%; 
+          transform: translateX(-50%);
+        }
+        
+        .character-sprite {
+          width: 400px;
+          height: auto;
+          filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+          transition: transform 0.3s ease;
+        }
+        
+        /* Special styling for Sassy to make her stand out */
+        .sassy-sprite {
+          width: 420px; /* Slightly larger */
+          filter: drop-shadow(0 0 30px rgba(255,215,0,0.4)) drop-shadow(0 0 20px rgba(255,255,255,0.2));
+        }
+        
+        .character-container.active .character-sprite { transform: scale(1.1); }
+        .character-container.inactive .character-sprite { transform: scale(0.9); opacity: 0.7; }
+        .character-container.center.active .sassy-sprite { 
+          transform: translateX(-50%) scale(1.15); 
+          filter: drop-shadow(0 0 40px rgba(255,215,0,0.6)) drop-shadow(0 0 30px rgba(255,255,255,0.3));
+        }
+
+        .celebration { animation: celebration 2s infinite; }
+        .toast { animation: toastAction 2s infinite; }
+        .cake { animation: cakeAction 2s infinite; }
+        .reminisce { animation: reminisceAction 2s infinite; }
+        .letter, .wave, .jump, .sparkle, .excited, .nervous, .shake, .search, .victory, .laugh { animation: genericAction 2s infinite; }
+        
+        @keyframes celebration {
+          0%, 100% { transform: scale(1.1) rotate(0deg); filter: drop-shadow(0 0 20px rgba(255,255,255,0.2)); }
+          25% { transform: scale(1.2) rotate(-5deg); filter: drop-shadow(0 0 30px rgba(255,215,0,0.5)); }
+          50% { transform: scale(1.15) rotate(0deg); filter: drop-shadow(0 0 25px rgba(255,20,147,0.4)); }
+          75% { transform: scale(1.2) rotate(5deg); filter: drop-shadow(0 0 30px rgba(0,255,255,0.4)); }
+        }
+        
+        @keyframes toastAction {
+          0%, 100% { transform: scale(1.1) translateY(0); }
+          50% { transform: scale(1.15) translateY(-10px) rotate(5deg); }
+        }
+        
+        @keyframes cakeAction {
+          0%, 100% { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(255,192,203,0.5)); }
+          50% { transform: scale(1.2); filter: drop-shadow(0 0 30px rgba(255,105,180,0.7)); }
+        }
+        
+        @keyframes reminisceAction {
+          0%, 100% { transform: scale(1.1); opacity: 1; }
+          50% { transform: scale(1.05); opacity: 0.8; filter: sepia(20%); }
+        }
+        
+        @keyframes genericAction { 0%, 100% { transform: scale(1.1); } 50% { transform: scale(1.15) translateY(-5px); } }
+
+        .speech-container { 
+          position: absolute; 
+          z-index: 30; 
+          transition: all 0.3s ease-out; 
+          max-width: 450px; 
+        }
+        
+        .speech-bubble-manga {
+          background: white;
+          border-radius: 20px;
+          padding: 20px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+          position: relative;
+          border: 3px solid #333;
+          transform: perspective(1000px) rotateY(-2deg);
+          transition: transform 0.3s ease;
+        }
+        
+        .celebration-bubble {
+          background: linear-gradient(135deg, #fff 0%, #ffe4f1 100%);
+          border-color: #ff69b4;
+          box-shadow: 0 4px 20px rgba(255,105,180,0.4);
+        }
+        
+        .speech-bubble-manga::after {
+          content: '';
+          position: absolute;
+          bottom: -20px;
+          left: 50%;
+          transform: translateX(-50%);
+          border: 15px solid transparent;
+          border-top-color: white;
+          border-bottom: none;
+        }
+        .speech-bubble-manga::before {
+          content: '';
+          position: absolute;
+          bottom: -23px;
+          left: 50%;
+          transform: translateX(-50%);
+          border: 15px solid transparent;
+          border-top-color: #333;
+          border-bottom: none;
+          z-index: -1;
+        }
+        
+        .celebration-bubble::before {
+          border-top-color: #ff69b4;
+        }
+        
+        .speaker-name { font-weight: bold; color: #333; font-size: 0.9rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .dialogue-text { font-size: 1.1rem; color: #333; line-height: 1.4; min-height: 25px; font-weight: 500; }
+        .animate-in { animation: bubbleIn 0.4s ease-out; }
+        @keyframes bubbleIn { 0% { opacity: 0; transform: perspective(1000px) rotateY(-15deg) scale(0.8) translateY(20px); } 100% { opacity: 1; transform: perspective(1000px) rotateY(-2deg) scale(1) translateY(0); } }
+        .thunder-effect { animation: flash 1.5s infinite; }
+        .thunder-overlay { position: absolute; inset: 0; background: white; opacity: 0; z-index: 15; animation: thunder 1.5s infinite; }
+        @keyframes flash { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.3) contrast(1.2); } }
+        @keyframes thunder { 0%, 100% { opacity: 0; } 10% { opacity: 0.8; } 11% { opacity: 0; } 14% { opacity: 0.4; } 15% { opacity: 0; } }
+      `}</style>
     </div>
   );
 };
