@@ -4,21 +4,21 @@ import { Button } from "@/components/ui/button";
 const CharacterSprite = ({ character, expression, action, isActive, position, size = "large" }) => {
   const spriteMap = {
     nitesh: {
-      happy: "/src/assets/nitesh.jpeg",
-      excited: "/src/assets/nitesh.jpeg",
-      surprised: "/src/assets/nitesh.jpeg",
-      neutral: "/src/assets/nitesh.jpeg",
+      happy: "/sassy-goa-getaway/assets/nitesh.jpeg",
+      excited: "/sassy-goa-getaway/assets/nitesh.jpeg",
+      surprised: "/sassy-goa-getaway/assets/nitesh.jpeg",
+      neutral: "/sassy-goa-getaway/assets/nitesh.jpeg",
     },
     jahanvi: {
-      happy: "/src/assets/jhanvi.jpg",
-      excited: "/src/assets/jhanvi.jpg",
-      surprised: "/src/assets/jhanvi.jpg",
-      neutral: "/src/assets/jhanvi.jpg",
+      happy: "/sassy-goa-getaway/assets/jhanvi.jpg",
+      excited: "/sassy-goa-getaway/assets/jhanvi.jpg",
+      surprised: "/sassy-goa-getaway/assets/jhanvi.jpg",
+      neutral: "/sassy-goa-getaway/assets/jhanvi.jpg",
     },
     sassy: {
-      happy: "/src/assets/sassy.png",
-      surprised: "/src/assets/sassy-surprised.png",
-      neutral: "/src/assets/sassy.png",
+      happy: "/sassy-goa-getaway/assets/sassy.png",
+      surprised: "/sassy-goa-getaway/assets/sassy-surprised.png",
+      neutral: "/sassy-goa-getaway/assets/sassy.png",
     }
   };
 

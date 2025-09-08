@@ -71,7 +71,7 @@ const Index = () => {
 
             <div className="absolute bottom-0 left-0 h-[80vh] transform-gpu transition-all duration-500 hover:scale-105">
               <img
-                src="./src/assets/nitesh.jpeg"
+                src="/sassy-goa-getaway/assets/nitesh.jpeg"
                 alt="Nitesh"
                 className="h-80 object-contain"
               />
@@ -80,7 +80,7 @@ const Index = () => {
 
             <div className="absolute bottom-0 right-0 h-[80vh] transform-gpu transition-all duration-500 hover:scale-105">
               <img
-                src="./src/assets/jhanvi.jpg"
+                src="/sassy-goa-getaway/assets/jhanvi.jpg"
                 alt="Jahanvi"
                 className="h-80 object-contain mr-10 w-180"
               />
@@ -90,7 +90,7 @@ const Index = () => {
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10">
               <div className="relative">
                 <img
-                  src="./src/assets/sassy-character.jpg"
+                  src="/sassy-goa-getaway/assets/sassy-character.jpg"
                   alt="Sassy"
                   className="h-[40vh] object-contain"
                   style={{ animation: "float 3s ease-in-out infinite" }}
