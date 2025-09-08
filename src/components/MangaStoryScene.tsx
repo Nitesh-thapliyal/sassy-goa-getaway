@@ -3,12 +3,17 @@ import { Button } from "@/components/ui/button";
 import { dialogueScenes } from "../data/scenes";
 import { celebrationScenes } from "./Celebration";
 
+// Import images properly (Vite handles them)
+import niteshImg from "/src/assets/nitesh.jpeg";
+import jahanviImg from "/src/assets/jhanvi.jpg";
+import sassyImg from "/src/assets/sassy-character.jpg";
+
 // Define the Scene interface properly
 interface Character {
   speaker: string;
   text: string;
   expression: string;
-  position: 'left' | 'right' | 'center'; // ✅ Added center position
+  position: "left" | "right" | "center"; // ✅ Added center position
   action: string;
 }
 
@@ -23,34 +28,33 @@ interface Scene {
 const CharacterSprite = ({ character, expression, action, isActive, position }) => {
   const spriteMap = {
     nitesh: {
-      happy: "/assets/nitesh.jpeg", 
-      excited: "/assets/nitesh.jpeg", 
-      surprised: "/assets/nitesh.jpeg",
-      nervous: "/assets/nitesh.jpeg", 
-      overjoyed: "/assets/nitesh.jpeg", 
-      emotional: "/assets/nitesh.jpeg",
-      nostalgic: "/assets/nitesh.jpeg",
-      neutral: "/assets/nitesh.jpeg",
+      happy: niteshImg,
+      excited: niteshImg,
+      surprised: niteshImg,
+      nervous: niteshImg,
+      overjoyed: niteshImg,
+      emotional: niteshImg,
+      nostalgic: niteshImg,
+      neutral: niteshImg,
     },
     jahanvi: {
-      happy: "/assets/jhanvi.jpg", 
-      enthusiastic: "/assets/jhanvi.jpg", 
-      angry: "/assets/jhanvi.jpg",
-      relieved: "/assets/jhanvi.jpg", 
-      overjoyed: "/assets/jhanvi.jpg", 
-      excited: "/assets/jhanvi.jpg",
-      neutral: "/assets/jhanvi.jpg",
+      happy: jahanviImg,
+      enthusiastic: jahanviImg,
+      angry: jahanviImg,
+      relieved: jahanviImg,
+      overjoyed: jahanviImg,
+      excited: jahanviImg,
+      neutral: jahanviImg,
     },
     // ✅ Added Sassy sprite map
     sassy: {
-      surprised: "/assets/sassy-character.jpg",
-      happy: "/assets/sassy-character.jpg",
-      excited: "/assets/sassy-character.jpg",
-      overjoyed: "/assets/sassy-character.jpg",
-      neutral: "/assets/sassy-character.jpg",
+      surprised: sassyImg,
+      happy: sassyImg,
+      excited: sassyImg,
+      overjoyed: sassyImg,
+      neutral: sassyImg,
     },
   };
-
   return (
     <div className={`character-container ${position} ${isActive ? "active" : "inactive"}`}>
       <img

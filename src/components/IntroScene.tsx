@@ -58,15 +58,15 @@ const CharacterSprite = ({
 }) => {
   const spriteMap = {
     nitesh: {
-      happy: "/assets/nitesh.jpeg",
-      excited: "/assets/nitesh.jpeg",
-      overjoyed: "/assets/nitesh.jpeg",
-      neutral: "/assets/nitesh.jpeg",
+      happy: "./src/assets/nitesh.jpeg",
+      excited: "./src/assets/nitesh.jpeg",
+      overjoyed: "./src/assets/nitesh.jpeg",
+      neutral: "./src/assets/nitesh.jpeg",
     },
     jahanvi: {
-      happy: "/assets/jhanvi.jpg",
-      enthusiastic: "/assets/jhanvi.jpg",
-      neutral: "/assets/jhanvi.jpg",
+      happy: "./src/assets/jhanvi.jpg",
+      enthusiastic: "./src/assets/jhanvi.jpg",
+      neutral: "./src/assets/jhanvi.jpg",
     },
   };
 
