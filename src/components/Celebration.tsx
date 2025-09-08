@@ -1,6 +1,6 @@
 // celebration.tsx
 import React from 'react';
-import partyImage from '/sassy-goa-getaway/assets/party.png';
+import partyImage from '/assets/party.png';
 
 // Create the backgrounds object locally
 const backgrounds = {
