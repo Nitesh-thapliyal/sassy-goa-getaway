@@ -4,9 +4,9 @@ import { dialogueScenes } from "../data/scenes";
 import { celebrationScenes } from "./Celebration";
 
 // Import images properly (Vite handles them)
-import niteshImg from "/assets/nitesh.jpeg";
-import jahanviImg from "/assets/jhanvi.jpg";
-import sassyImg from "/assets/sassy-character.jpg";
+import niteshImg from "/sassy-goa-getaway/assets/nitesh.jpeg";
+import jahanviImg from "/sassy-goa-getaway/assets/jhanvi.jpg";
+import sassyImg from "/sassy-goa-getaway/assets/sassy-character.jpg";
 
 // Define the Scene interface properly
 interface Character {

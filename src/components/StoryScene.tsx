@@ -4,21 +4,21 @@ import { Button } from "@/components/ui/button";
 const CharacterSprite = ({ character, expression, action, isActive, position, size = "large" }) => {
   const spriteMap = {
     nitesh: {
-      happy: "/assets/nitesh.jpeg",
-      excited: "/assets/nitesh.jpeg",
-      surprised: "/assets/nitesh.jpeg",
-      neutral: "/assets/nitesh.jpeg",
+      happy: "/sassy-goa-getaway/assets/nitesh.jpeg",
+      excited: "/sassy-goa-getaway/assets/nitesh.jpeg",
+      surprised: "/sassy-goa-getaway/assets/nitesh.jpeg",
+      neutral: "/sassy-goa-getaway/assets/nitesh.jpeg",
     },
     jahanvi: {
-      happy: "/assets/jhanvi.jpg",
-      excited: "/assets/jhanvi.jpg",
-      surprised: "/assets/jhanvi.jpg",
-      neutral: "/assets/jhanvi.jpg",
+      happy: "/sassy-goa-getaway/assets/jhanvi.jpg",
+      excited: "/sassy-goa-getaway/assets/jhanvi.jpg",
+      surprised: "/sassy-goa-getaway/assets/jhanvi.jpg",
+      neutral: "/sassy-goa-getaway/assets/jhanvi.jpg",
     },
     sassy: {
-      happy: "/assets/sassy.png",
-      surprised: "/assets/sassy-surprised.png",
-      neutral: "/assets/sassy.png",
+      happy: "/sassy-goa-getaway/assets/sassy.png",
+      surprised: "/sassy-goa-getaway/assets/sassy-surprised.png",
+      neutral: "/sassy-goa-getaway/assets/sassy.png",
     }
   };
 
