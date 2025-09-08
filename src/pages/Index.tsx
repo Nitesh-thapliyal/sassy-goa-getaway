@@ -4,6 +4,7 @@ import IntroScene from "@/components/IntroScene";
 import MangaStoryScene from "@/components/MangaStoryScene";
 import { Button } from "@/components/ui/button";
 import { celebrationScenes } from "@/components/Celebration";
+import BackgroundMusic from "@/components/BackgroundMusic"; 
 
 const Index = () => {
   const [currentScene, setCurrentScene] = useState(-2);
@@ -43,6 +44,12 @@ const Index = () => {
 
   return (
     <MangaLayout isTransitioning={isTransitioning}>
+
+      <BackgroundMusic 
+        src="./assets/amazing-plan.mp3" 
+        volume={0.2} 
+        autoplay={true} 
+      />
       {/* Welcome screen with mobile responsiveness */}
       {currentScene === -2 && (
         <div className="min-h-screen relative overflow-hidden">
