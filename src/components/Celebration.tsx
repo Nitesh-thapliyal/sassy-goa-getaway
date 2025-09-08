@@ -1,6 +1,6 @@
 // celebration.tsx
 import React from 'react';
-import partyImage from '/sassy-goa-getaway/assets/party.png';
+import partyImage from '/assets/party.png';
 
 // Create the backgrounds object locally
 const backgrounds = {
@@ -49,27 +49,27 @@ export const celebrationScenes: Scene[] = [
     background: backgrounds.sassy_home,
     sfx: "CAKE TIME!",
     characters: [
-      { speaker: "jahanvi", text: "Time to cut the cake! Make a wish, Sassy! 🎂", expression: "excited", position: "right", action: "cake" },
+      { speaker: "jahanvi", text: "Time to murder the cake! Make a wish, Sassy!🎂", expression: "excited", position: "right", action: "cake" },
       { speaker: "sassy", text: "This is the best birthday surprise ever! *closes eyes and makes wish* ✨", expression: "overjoyed", position: "center", action: "cake" },
-      { speaker: "nitesh", text: "What did you wish for?", expression: "curious", position: "left", action: "excited" },
+      { speaker: "nitesh", text: "What did you wish for...ahm ahm?", expression: "curious", position: "left", action: "excited" },
     ],
   },
   {
     background: backgrounds.sassy_home,
     sfx: "MEMORIES!",
     characters: [
-      { speaker: "nitesh", text: "Remember when we first met? What an amazing journey it's been!", expression: "nostalgic", position: "left", action: "reminisce" },
-      { speaker: "sassy", text: "Yes! From strangers to best friends... I can't believe how far we've come! 🥺", expression: "nostalgic", position: "center", action: "reminisce" },
-      { speaker: "jahanvi", text: "And we're just getting started! More adventures ahead!", expression: "happy", position: "right", action: "excited" },
+      { speaker: "nitesh", text: "Yarr Goa aa to gyee rhenge kha!", expression: "nostalgic", position: "left", action: "reminisce" },
+      { speaker: "sassy", text: "Mere ghr nhi, mere ghr sirf Jhanvi rhegi🥺", expression: "nostalgic", position: "center", action: "reminisce" },
+      { speaker: "jahanvi", text: "hehe", expression: "happy", position: "right", action: "excited" },
     ],
   },
   {
     background: backgrounds.sassy_home,
     sfx: "GROUP HUG!",
     characters: [
-      { speaker: "jahanvi", text: "This surprise was totally worth the crazy airport adventure! 😄", expression: "happy", position: "right", action: "laugh" },
-      { speaker: "nitesh", text: "Best friends forever, Sassy! Happy Birthday! 🎉❤️", expression: "overjoyed", position: "left", action: "celebration" },
-      { speaker: "sassy", text: "I love you both so much! Come here for the biggest group hug ever! 🤗💖", expression: "overjoyed", position: "center", action: "celebration" },
+      { speaker: "jahanvi", text: "Maze agyi, it was crazy adventure 😄", expression: "happy", position: "right", action: "laugh" },
+      { speaker: "nitesh", text: "Chal ab vaps, Sassy! Discord p aaja! 🎉❤️", expression: "overjoyed", position: "left", action: "celebration" },
+      { speaker: "sassy", text: "Aaayiii discord p!🤗💖", expression: "overjoyed", position: "center", action: "celebration" },
     ],
   },
 ];

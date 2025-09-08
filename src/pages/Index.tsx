@@ -212,9 +212,9 @@ const Index = () => {
             <h1 className="text-6xl font-bold text-white mb-4 birthday-text-glow">
               Happy Birthday Sassy!
             </h1>
-            <p className="text-2xl text-white mb-8">
+            {/* <p className="text-2xl text-white mb-8">
               The most amazing celebration ever! 🎂✨
-            </p>
+            </p> */}
             <div className="text-4xl mb-4">
               🎊 Thanks for the incredible journey! 🎊
             </div>
