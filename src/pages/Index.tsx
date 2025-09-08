@@ -3,7 +3,7 @@ import MangaLayout from "@/components/MangaLayout";
 import IntroScene from "@/components/IntroScene";
 import MangaStoryScene from "@/components/MangaStoryScene";
 import { Button } from "@/components/ui/button";
-import { celebrationScenes } from "@/components/Celebration"; // Import your celebration scenes
+import { celebrationScenes } from "@/components/Celebration";
 
 const Index = () => {
   const [currentScene, setCurrentScene] = useState(-2);
@@ -32,7 +32,7 @@ const Index = () => {
   };
 
   const playPageTurnSound = () => {
-    const audio = new Audio("/page-turn.mp3");
+    const audio = new Audio("./page-turn.mp3");
     audio.volume = 0.3;
     audio.play().catch(() => {});
   };
@@ -43,19 +43,18 @@ const Index = () => {
 
   return (
     <MangaLayout isTransitioning={isTransitioning}>
-      {/* Your existing welcome screen */}
+      {/* Welcome screen with mobile responsiveness */}
       {currentScene === -2 && (
         <div className="min-h-screen relative overflow-hidden">
-          {/* All your existing welcome screen code stays the same */}
           <div className="absolute inset-0 bg-gradient-to-b from-pink-500 via-purple-600 to-indigo-800">
-            {/* Your existing balloon and decoration code */}
+            {/* Balloons - reduced count on mobile */}
             <div className="absolute inset-0 balloon-animation">
-              {[...Array(20)].map((_, i) => (
+              {[...Array(window.innerWidth > 768 ? 20 : 10)].map((_, i) => (
                 <div
                   key={i}
                   className="balloon"
                   style={{
-                    left: `${10 + i * 4.5}%`,
+                    left: `${10 + i * (window.innerWidth > 768 ? 4.5 : 9)}%`,
                     animationDelay: `${i * 0.3}s`,
                     animationDuration: `${8 + (i % 3)}s`,
                   }}
@@ -65,64 +64,69 @@ const Index = () => {
               ))}
             </div>
 
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4 text-8xl animate-bounce">
+            {/* Cake emoji - responsive size */}
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-2 md:mb-4 text-4xl md:text-8xl animate-bounce">
               🎂
             </div>
 
-            <div className="absolute bottom-0 left-0 h-[80vh] transform-gpu transition-all duration-500 hover:scale-105">
+            {/* Nitesh image - mobile responsive */}
+            <div className="absolute bottom-0 left-0 h-[40vh] md:h-[80vh] transform-gpu transition-all duration-500 hover:scale-105">
               <img
-                src="/sassy-goa-getaway/assets/nitesh.jpeg"
+                src="./assets/nitesh.jpeg"
                 alt="Nitesh"
-                className="h-80 object-contain"
+                className="h-32 md:h-80 object-contain"
               />
-              <div className="absolute top-0 right-0 text-4xl animate-spin">🎉</div>
+              <div className="absolute top-0 right-0 text-2xl md:text-4xl animate-spin">🎉</div>
             </div>
 
-            <div className="absolute bottom-0 right-0 h-[80vh] transform-gpu transition-all duration-500 hover:scale-105">
+            {/* Jahanvi image - mobile responsive */}
+            <div className="absolute bottom-0 right-0 h-[40vh] md:h-[80vh] transform-gpu transition-all duration-500 hover:scale-105">
               <img
-                src="/sassy-goa-getaway/assets/jhanvi.jpg"
+                src="./assets/jhanvi.jpg"
                 alt="Jahanvi"
-                className="h-80 object-contain mr-10 w-180"
+                className="h-32 md:h-80 object-contain mr-2 md:mr-10"
               />
-              <div className="absolute top-0 left-0 text-4xl animate-spin">🎊</div>
+              <div className="absolute top-0 left-0 text-2xl md:text-4xl animate-spin">🎊</div>
             </div>
 
+            {/* Sassy center image - mobile responsive */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10">
               <div className="relative">
                 <img
-                  src="/sassy-goa-getaway/assets/sassy-character.jpg"
+                  src="./assets/sassy-character.jpg"
                   alt="Sassy"
-                  className="h-[40vh] object-contain"
+                  className="h-[20vh] md:h-[40vh] object-contain"
                   style={{ animation: "float 3s ease-in-out infinite" }}
                 />
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full">
-                  <div className="text-6xl animate-bounce">👑</div>
+                  <div className="text-3xl md:text-6xl animate-bounce">👑</div>
                 </div>
               </div>
             </div>
 
-            <div className="absolute top-10 left-1/2 transform -translate-x-1/2 text-center z-20">
-              <h1 className="manga-title text-8xl mb-4 text-yellow-300 birthday-text-glow">
+            {/* Title - mobile responsive */}
+            <div className="absolute top-4 md:top-10 left-1/2 transform -translate-x-1/2 text-center z-20 px-4">
+              <h1 className="manga-title text-4xl md:text-8xl mb-2 md:mb-4 text-yellow-300 birthday-text-glow">
                 Sassy's Birthday
               </h1>
-              <h2 className="manga-title text-6xl text-white birthday-text-glow">
+              <h2 className="manga-title text-2xl md:text-6xl text-white birthday-text-glow">
                 Adventure!
               </h2>
             </div>
 
-            <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 z-20">
+            {/* Button - mobile responsive */}
+            <div className="absolute bottom-16 md:bottom-32 left-1/2 transform -translate-x-1/2 z-20 px-4">
               <Button
                 onClick={() => handleSceneChange(-1)}
-                className="birthday-button"
+                className="birthday-button w-full md:w-auto"
               >
-                <span className="relative z-10 text-4xl px-16 py-8 inline-block font-bold text-white">
+                <span className="relative z-10 text-xl md:text-4xl px-8 md:px-16 py-4 md:py-8 inline-block font-bold text-white">
                   Let's Celebrate! 🎉
                 </span>
               </Button>
             </div>
           </div>
 
-          {/* Your existing styles */}
           <style>{`
             @keyframes float {
               0%, 100% { transform: translateY(0px); }
@@ -131,8 +135,14 @@ const Index = () => {
 
             .balloon {
               position: absolute;
-              font-size: 2rem;
+              font-size: 1.5rem;
               animation: float-up linear infinite;
+            }
+
+            @media (min-width: 768px) {
+              .balloon {
+                font-size: 2rem;
+              }
             }
 
             @keyframes float-up {
@@ -159,21 +169,42 @@ const Index = () => {
                 0 0 20px rgba(255,20,147,0.5),
                 0 0 40px rgba(255,20,147,0.3),
                 0 0 60px rgba(255,20,147,0.1);
+              min-width: 280px;
+            }
+
+            @media (max-width: 767px) {
+              .birthday-button {
+                min-width: 250px;
+                border-radius: 25px;
+              }
             }
 
             .birthday-button:hover {
               transform: translateY(-5px) scale(1.05);
             }
 
+            @media (max-width: 767px) {
+              .birthday-button:hover {
+                transform: translateY(-2px) scale(1.02);
+              }
+            }
+
             @keyframes pulse {
               0%, 100% { transform: scale(1); }
               50% { transform: scale(1.05); }
+            }
+
+            @media (max-width: 767px) {
+              @keyframes pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.02); }
+              }
             }
           `}</style>
         </div>
       )}
 
-      {/* Your existing intro scene */}
+      {/* Intro scene */}
       {currentScene === -1 && (
         <IntroScene onStart={() => handleSceneChange(0)} />
       )}
@@ -191,41 +222,38 @@ const Index = () => {
       {scenePhase === 'celebration' && currentScene >= 0 && currentScene < totalCelebrationScenes && (
         <MangaStoryScene
           sceneNumber={currentScene}
-          sceneData={celebrationScenes[currentScene]} // Pass celebration scene data
+          sceneData={celebrationScenes[currentScene]}
           onNext={() => {
             if (currentScene < totalCelebrationScenes - 1) {
               handleSceneChange(currentScene + 1);
             } else {
-              handleSceneChange(totalScenes); // Go to final end scene
+              handleSceneChange(totalScenes);
             }
           }}
           isActive={true}
-          isCelebration={true} // Flag to indicate this is a celebration scene
+          isCelebration={true}
         />
       )}
 
-      {/* Updated end scene condition */}
+      {/* End scene - mobile responsive */}
       {currentScene >= totalScenes && (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-400 via-purple-500 to-orange-400">
-          <div className="text-center">
-            <div className="text-9xl mb-8 animate-bounce">🎉</div>
-            <h1 className="text-6xl font-bold text-white mb-4 birthday-text-glow">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-400 via-purple-500 to-orange-400 px-4">
+          <div className="text-center max-w-md md:max-w-2xl">
+            <div className="text-6xl md:text-9xl mb-4 md:mb-8 animate-bounce">🎉</div>
+            <h1 className="text-3xl md:text-6xl font-bold text-white mb-2 md:mb-4 birthday-text-glow">
               Happy Birthday Sassy!
             </h1>
-            {/* <p className="text-2xl text-white mb-8">
-              The most amazing celebration ever! 🎂✨
-            </p> */}
-            <div className="text-4xl mb-4">
+            <div className="text-2xl md:text-4xl mb-4 md:mb-8">
               🎊 Thanks for the incredible journey! 🎊
             </div>
             <Button
               onClick={() => {
                 setCurrentScene(-2);
-                setScenePhase('main'); // Reset to main phase
+                setScenePhase('main');
               }}
-              className="birthday-button"
+              className="birthday-button w-full md:w-auto"
             >
-              <span className="text-2xl px-8 py-4 font-bold text-white">
+              <span className="text-xl md:text-2xl px-6 md:px-8 py-3 md:py-4 font-bold text-white">
                 Start Over 🔄
               </span>
             </Button>
@@ -251,15 +279,36 @@ const Index = () => {
                 0 0 20px rgba(255,20,147,0.5),
                 0 0 40px rgba(255,20,147,0.3),
                 0 0 60px rgba(255,20,147,0.1);
+              min-width: 200px;
+            }
+
+            @media (max-width: 767px) {
+              .birthday-button {
+                border-radius: 25px;
+                min-width: 180px;
+              }
             }
 
             .birthday-button:hover {
               transform: translateY(-5px) scale(1.05);
             }
 
+            @media (max-width: 767px) {
+              .birthday-button:hover {
+                transform: translateY(-2px) scale(1.02);
+              }
+            }
+
             @keyframes pulse {
               0%, 100% { transform: scale(1); }
               50% { transform: scale(1.05); }
+            }
+
+            @media (max-width: 767px) {
+              @keyframes pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.02); }
+              }
             }
           `}</style>
         </div>
